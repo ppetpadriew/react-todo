@@ -14,6 +14,7 @@ function TodoInput({createTodo}) {
     function handleKeyDown(e) {
         if (e.keyCode == 13) {
             createTodo(e.target.value);
+            e.target.value = "";
         }
     }
 

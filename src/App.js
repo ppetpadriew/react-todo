@@ -5,12 +5,21 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux'
 import TodoList from './TodoList';
 
-function counter(state = {todo: []}, action) {
+function counter(state = {todos: []}, action) {
     switch (action.type) {
         case 'CREATE_TODO':
             return {
                 ...state,
-                todo: [...state.todo, action.payload]
+                todos: [...state.todos, {text: action.payload, checked: false}]
+            };
+        case 'TOGGLE_TODO':
+            return {
+                ...state,
+                todos: state.todos.map((todo, i) => {
+                    if (i === action.index) {
+                        return {...todo, checked: !todo.checked}
+                    }
+                })
             };
         default:
             return state
@@ -23,16 +32,18 @@ let store = createStore(counter)
 store.subscribe(() => console.log(store.getState()));
 
 
-function App(todo) {
-    return (
-        <Provider store={store}>
-            <div className="App">
-                <TodoInput/>
-                <TodoList/>
-            </div>
-        </Provider>
+class App extends React.Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <div className="App">
+                    <TodoInput/>
+                    <TodoList/>
+                </div>
+            </Provider>
 
-    );
+        );
+    }
 }
 
 export default App;

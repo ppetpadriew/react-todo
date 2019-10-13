@@ -4,33 +4,15 @@ import TodoInput from './TodoInput';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux'
 import TodoList from './TodoList';
-
-function counter(state = {todos: []}, action) {
-    switch (action.type) {
-        case 'CREATE_TODO':
-            return {
-                ...state,
-                todos: [...state.todos, {text: action.payload, checked: false}]
-            };
-        case 'TOGGLE_TODO':
-            return {
-                ...state,
-                todos: state.todos.map((todo, i) => {
-                    if (i === action.index) {
-                        return {...todo, checked: !todo.checked}
-                    }
-                })
-            };
-        default:
-            return state
-    }
-}
+import rootReducer from './reducer';
 
 // Create a Redux store holding the state of your app.
 // Its API is { subscribe, dispatch, getState }.
-let store = createStore(counter)
+let store = createStore(
+    rootReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 store.subscribe(() => console.log(store.getState()));
-
 
 class App extends React.Component {
     render() {
@@ -41,7 +23,6 @@ class App extends React.Component {
                     <TodoList/>
                 </div>
             </Provider>
-
         );
     }
 }

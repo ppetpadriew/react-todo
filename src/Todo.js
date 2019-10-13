@@ -12,6 +12,10 @@ const mapDispatchToProps = dispatch => {
             type: 'RE_TEXT',
             newText: e.target.value,
             index: todo.props.index
+        }),
+        deleteTodo: (index) => dispatch({
+            type: 'DELETE_TODO',
+            index: index
         })
     };
 };
@@ -24,6 +28,7 @@ class Todo extends React.Component {
                 <input type="checkbox" checked={this.props.checked}
                        onChange={this.props.toggleTodo.bind(this, this)}/>
                 <input type="text" value={this.props.text} onChange={this.props.reText.bind(this, this)}/>
+                <button onClick={this.props.deleteTodo.bind(this, this.props.index)}>X</button>
             </li>
         );
     }

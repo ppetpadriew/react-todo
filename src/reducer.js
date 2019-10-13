@@ -24,7 +24,17 @@ export default function rootReducer(state = {todos: []}, action) {
                     }
                     return todo;
                 })
-            }
+            };
+        case 'DELETE_TODO':
+            return {
+                ...state,
+                todos: state.todos.filter((todo, i) => {
+                    if (i === action.index) {
+                        return false;
+                    }
+                    return true;
+                })
+            };
         default:
             return state
     }

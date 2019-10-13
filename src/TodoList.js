@@ -1,21 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import './TodoList.css';
+import Todo from './Todo';
 
 const mapStateToProps = state => {
     return {
         todos: state.todos
     }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        toggleTodo: (todo, index) => dispatch({
-            type: 'TOGGLE_TODO',
-            payload: todo,
-            index: index,
-        })
-    };
 }
 
 class TodoList extends React.Component {
@@ -27,8 +18,7 @@ class TodoList extends React.Component {
                 <ul>
                     {todos && todos.length
                         ? todos.map((todo, index) => {
-                            return <li key={index}><input type="checkbox" checked={todo.checked}
-                                                          onChange={this.props.toggleTodo.bind(this, todo, index)}/>{todo.text}</li>;
+                            return <Todo index={index} checked={todo.checked}>{todo.text}</Todo>;
                         })
                         : "No todos, yay!"}
                 </ul>
@@ -39,5 +29,5 @@ class TodoList extends React.Component {
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
 )(TodoList);

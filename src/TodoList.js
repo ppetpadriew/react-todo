@@ -18,7 +18,7 @@ class TodoList extends React.Component {
                 <ul>
                     {todos && todos.length
                         ? todos.map((todo, index) => {
-                            return <Todo index={index} checked={todo.checked}>{todo.text}</Todo>;
+                            return <Todo index={index} checked={todo.checked} text={todo.text}></Todo>;
                         })
                         : "No todos, yay!"}
                 </ul>

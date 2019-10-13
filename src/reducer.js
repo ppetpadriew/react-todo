@@ -15,6 +15,16 @@ export default function rootReducer(state = {todos: []}, action) {
                     return todo;
                 })
             };
+        case 'RE_TEXT':
+            return {
+                ...state,
+                todos: state.todos.map((todo, i) => {
+                    if (i === action.index) {
+                        return {...todo, text: action.newText}
+                    }
+                    return todo;
+                })
+            }
         default:
             return state
     }

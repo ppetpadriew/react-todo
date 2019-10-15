@@ -1,5 +1,6 @@
 import React from 'react';
 import connect from "react-redux/es/connect/connect";
+import {DragSource} from 'react-dnd'
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -23,7 +24,9 @@ const mapDispatchToProps = dispatch => {
 class Todo extends React.Component {
 
     render() {
-        return (
+        const {isDragging, connectDragSource} = this.props;
+
+        return connectDragSource(
             <li key={this.props.index}>
                 <input type="checkbox" checked={this.props.checked}
                        onChange={this.props.toggleTodo.bind(this, this)}/>
@@ -34,7 +37,17 @@ class Todo extends React.Component {
     }
 }
 
-export default connect(
+const reduxComp = connect(
     null,
     mapDispatchToProps
 )(Todo);
+
+export default DragSource('todo', {
+    beginDrag: props => {
+        console.log('Begin dragging');
+        return props;
+    }
+}, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: connect.dragPreview()
+}))(reduxComp);
